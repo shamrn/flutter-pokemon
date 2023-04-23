@@ -25,6 +25,9 @@ dev_dependencies:
   # encourage good coding practices.
   flutter_lints: ^2.0.0
 
+  # Customize Flutter's default white native splash screen with background color and splash image.
+  # Supports dark mode, full screen, and more.
+  flutter_native_splash: ^2.2.19
 
 flutter:
 
@@ -63,3 +66,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+# Setup to start installing the splash screen ( library - https://pub.dev/packages/flutter_native_splash )
+# Command: `flutter pub run flutter_native_splash:create`
+flutter_native_splash:
+  color: "#1c1d1f"
+  image: assets/images/splash_screen/main.png
+  android_12:
+    color: "#1c1d1f"
+    icon_background_color: "#1c1d1f"
+    image: assets/images/splash_screen/android_12.png
