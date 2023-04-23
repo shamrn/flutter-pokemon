@@ -25,6 +25,9 @@ dev_dependencies:
   # encourage good coding practices.
   flutter_lints: ^2.0.0
 
+  # Customize Flutter's default white native splash screen with background color and splash image.
+  # Supports dark mode, full screen, and more.
+  flutter_native_splash: ^2.2.19
 
 flutter:
 
