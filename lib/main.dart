@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokemon/core/platform/splash_screen.dart';
 
 void main() {
+  runSplashScreen();
   runApp(const PokemonApp());
 }
 
