@@ -3,5 +3,6 @@
     "nameRandomScreen": "Случайный покемон",
     "textValidationRequiredField": "Обязательное поле",
     "textSearchField": "Введите имя",
-    "imageCaption": "Art"
+    "imageCaption": "Art",
+    "actionSnackBar": "Закрыть"
 }
