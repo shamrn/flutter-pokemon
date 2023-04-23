@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_pokemon/common/widgets/primary_widget.dart';
+import 'package:flutter_pokemon/feature/presentation/blocs/search_pokemon/search_pokemon_bloc.dart';
+import 'package:flutter_pokemon/feature/presentation/blocs/search_pokemon/search_pokemon_state.dart';
 import 'package:flutter_pokemon/feature/presentation/widgets/card_widget.dart';
 import 'package:flutter_pokemon/feature/presentation/widgets/search_widget.dart';
+import 'package:flutter_pokemon/feature/presentation/widgets/snack_bar_widget.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -12,18 +16,42 @@ class SearchScreen extends StatelessWidget {
     return PrimaryWidget(
       screenTitle: AppLocalizations.of(context)!.nameSearchScreen,
       child: Column(
-        children: const [
-          SearchWidget(),
-          SizedBox(
+        children: [
+          const SearchWidget(),
+          const SizedBox(
             height: 40,
           ),
-          CardWidget(
-            name: 'pikachu',
-            imageUrl:
-                'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
-          ),
+          _blocComponent(),
         ],
       ),
+    );
+  }
+
+  Widget _blocComponent() {
+    return BlocConsumer<SearchPokemonBloc, SearchPokemonState>(
+
+      listenWhen: (prevState, currentState) {
+        return prevState is! SearchPokemonErrorState &&
+            currentState is SearchPokemonErrorState;
+      },
+      listener: (context, state) {
+        if (state is SearchPokemonErrorState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              snackBarWidget(context: context, message: state.errorMessage));
+        }
+      },
+
+      builder: (context, state) {
+        if (state is SearchPokemonLoadedState) {
+          return CardWidget(
+            name: state.pokemon.name,
+            imageUrl: state.pokemon.imageUrl,
+          );
+        } else if (state is SearchPokemonLoadingState) {
+          return const CircularProgressIndicator();
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
 }
