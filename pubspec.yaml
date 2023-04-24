@@ -12,10 +12,28 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+
+  # Contains code to deal with internationalized/localized messages, date and number formatting and parsing,
+  # bi-directional text, and other internationalization issues.
+  intl: ^0.17.0
+
+  # A composable, multi-platform, Future-based API for HTTP requests.
+  http: ^0.13.5
+
+  # Flutter Widgets that make it easy to implement the BLoC (Business Logic Component) design pattern.
+  # Built to be used with the bloc state management package.
+  flutter_bloc: ^8.1.2
+
+  # A Dart package that helps to implement value based equality without needing
+  # to explicitly override == and hashCode.
+  equatable: ^2.0.5
+
 
 dev_dependencies:
   flutter_test:
@@ -25,12 +43,13 @@ dev_dependencies:
   # encourage good coding practices.
   flutter_lints: ^2.0.0
 
+  # Customize Flutter's default white native splash screen with background color and splash image.
+  # Supports dark mode, full screen, and more.
+  flutter_native_splash: ^2.2.19
 
 flutter:
 
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
+  generate: true
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
@@ -63,3 +82,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+# Setup to start installing the splash screen ( library - https://pub.dev/packages/flutter_native_splash )
+# Command: `flutter pub run flutter_native_splash:create`
+flutter_native_splash:
+  color: "#1c1d1f"
+  image: assets/images/splash_screen/main.png
+  android_12:
+    color: "#1c1d1f"
+    icon_background_color: "#1c1d1f"
+    image: assets/images/splash_screen/android_12.png
