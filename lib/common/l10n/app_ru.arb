@@ -4,5 +4,9 @@
     "textValidationRequiredField": "Обязательное поле",
     "textSearchField": "Введите имя",
     "imageCaption": "Art",
-    "actionSnackBar": "Закрыть"
+    "actionSnackBar": "Закрыть",
+    "randomPokemonNotAvailable": "Случайный покемон недоступен",
+    "randomPokemonLoading": "Загрузка покемонов. Пожалуйста, подождите",
+    "pokemonNotFound": "Покемон не найден",
+    "pokemonRetrievalError": "Ошибка получения данных"
 }
