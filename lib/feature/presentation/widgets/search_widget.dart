@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_pokemon/common/app_constants/app_colors.dart';
-import 'package:flutter_pokemon/feature/presentation/blocs/search_pokemon/search_pokemon_bloc.dart';
-import 'package:flutter_pokemon/feature/presentation/blocs/search_pokemon/search_pokemon_event.dart';
+import 'package:flutter_pokemon/feature/presentation/blocs/pokemon/pokemon_bloc.dart';
+import 'package:flutter_pokemon/feature/presentation/blocs/pokemon/pokemon_event.dart';
 
 class SearchWidget extends StatefulWidget {
   const SearchWidget({Key? key}) : super(key: key);
@@ -53,7 +53,7 @@ class _SearchWidgetState extends State<SearchWidget> {
           splashFactory: InkRipple.splashFactory,
           onTap: () {
             if (_formKey.currentState!.validate()) {
-              context.read<SearchPokemonBloc>().add(
+              context.read<PokemonBloc>().add(
                   SearchPokemonLoadEvent(name: _pokemonNameController.text));
             }
           },
