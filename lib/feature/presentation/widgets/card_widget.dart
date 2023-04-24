@@ -1,3 +1,5 @@
+// The file implements card widget
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_pokemon/common/app_constants/app_colors.dart';

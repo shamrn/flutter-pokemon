@@ -1,8 +1,12 @@
+// The file implements repositories for pokemon functionality
+
 import 'package:flutter_pokemon/feature/data/datasource/pokeapi_client/models.dart';
 import 'package:flutter_pokemon/feature/data/datasource/pokeapi_client/services.dart';
 import 'package:flutter_pokemon/feature/data/models/pokemon_models.dart';
 
 abstract class PokemonRepository {
+  // Basic Class
+
   Pokemon get pokemonService;
 
   Future<PokemonModel> getPokemon() async {
@@ -13,6 +17,8 @@ abstract class PokemonRepository {
 }
 
 class SearchPokemonRepository extends PokemonRepository {
+  // Subclass the search pokemon repository
+
   final String name;
 
   SearchPokemonRepository({required this.name});
@@ -22,6 +28,8 @@ class SearchPokemonRepository extends PokemonRepository {
 }
 
 class RandomPokemonRepository extends PokemonRepository {
+  // Subclass the random pokemon repository
+
   final int numberPokemon;
 
   RandomPokemonRepository({required this.numberPokemon});
@@ -31,6 +39,8 @@ class RandomPokemonRepository extends PokemonRepository {
 }
 
 class PokemonNumberRepository {
+  // Class for the number of pokemon repository
+
   Future<int> getNumber() async {
     return await getNumberPokemon();
   }

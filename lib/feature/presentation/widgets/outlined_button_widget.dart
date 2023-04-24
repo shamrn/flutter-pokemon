@@ -1,7 +1,12 @@
+// The file implements common outlined button widget
+
 import 'package:flutter/material.dart';
 import 'package:flutter_pokemon/common/app_constants/app_colors.dart';
 
 class OutlinedButtonWidget extends StatelessWidget {
+  // Class implements `OutlinedButton`.
+  // The button has two states active and inactive
+
   final String text;
   final Size size;
   final Function onPressed;

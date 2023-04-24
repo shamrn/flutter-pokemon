@@ -1,3 +1,5 @@
+// The file contains a widget
+
 import 'package:flutter/material.dart';
 import 'package:flutter_pokemon/common/app_constants/app_colors.dart';
 import 'package:flutter_pokemon/common/app_constants/app_styles.dart';
