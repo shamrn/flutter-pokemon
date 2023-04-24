@@ -17,3 +17,9 @@ class RandomPokemonRepository {
         id: pokemon.id, name: pokemon.name, imageUrl: pokemon.imageUrl);
   }
 }
+
+class PokemonNumberRepository {
+  Future<int> getNumber() async {
+    return await getNumberPokemon();
+  }
+}

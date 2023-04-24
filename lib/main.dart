@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_pokemon/common/l10n/l10n.dart';
 import 'package:flutter_pokemon/core/platform/splash_screen.dart';
+import 'package:flutter_pokemon/feature/presentation/blocs/pokemon_number/pokemon_number_cubit.dart';
 import 'package:flutter_pokemon/feature/presentation/blocs/search_pokemon/search_pokemon_bloc.dart';
 import 'package:flutter_pokemon/feature/presentation/screens/random_screen.dart';
 import 'package:flutter_pokemon/feature/presentation/screens/search_screen.dart';
@@ -28,6 +29,8 @@ class PokemonApp extends StatelessWidget {
       providers: [
         BlocProvider<SearchPokemonBloc>(
             create: (context) => SearchPokemonBloc()),
+        BlocProvider<PokemonNumberCubit>(
+            create: (context) => PokemonNumberCubit()..loadPokemonNumber())
       ],
       child: MaterialApp(
         // Ui settings
