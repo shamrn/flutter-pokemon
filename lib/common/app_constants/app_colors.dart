@@ -8,4 +8,5 @@ class AppColors {
   static const Color secondColor = Color(0xFFE16441);
   static const Color darkenedBackgroundColor = Color(0xFF6D6463);
   static const Color primaryTextColor = Color(0xFFE6D9D9);
+  static const Color inActiveButton = Color(0xFF666565);
 }
