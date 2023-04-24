@@ -26,7 +26,15 @@ dependencies:
   # A composable, multi-platform, Future-based API for HTTP requests.
   http: ^0.13.5
 
-  
+  # Flutter Widgets that make it easy to implement the BLoC (Business Logic Component) design pattern.
+  # Built to be used with the bloc state management package.
+  flutter_bloc: ^8.1.2
+
+  # A Dart package that helps to implement value based equality without needing
+  # to explicitly override == and hashCode.
+  equatable: ^2.0.5
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

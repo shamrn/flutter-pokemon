@@ -6,32 +6,58 @@ import 'package:flutter_pokemon/feature/data/datasource/pokeapi_client/client.da
 import 'package:flutter_pokemon/feature/data/datasource/pokeapi_client/exceptions.dart';
 import 'package:flutter_pokemon/feature/data/datasource/pokeapi_client/models.dart';
 
-Future<PokemonDTO> getPokemonByName({
-  required String name,
-}) async {
-  PokeAPIClient pokeAPIClient = PokeAPIClient(name: name);
-  await pokeAPIClient.request();
-  var result = pokeAPIClient.result;
+abstract class Pokemon {
+  Future<PokemonDTO> getPokemon();
+}
 
-  if (result != null) {
-    return PokemonDTO.fromJson(result);
-  } else {
-    throw PokeAPIReceiveException();
+class SearchPokemon implements Pokemon {
+  final String name;
+
+  SearchPokemon({required this.name});
+
+  @override
+  Future<PokemonDTO> getPokemon() async {
+    PokeAPIClient pokeAPIClient = PokeAPIClient(name: name);
+
+    await pokeAPIClient.request();
+    Map<dynamic, dynamic>? result = pokeAPIClient.result;
+
+    if (result != null) {
+      return PokemonDTO.fromJson(result);
+    } else {
+      throw PokeAPIReceiveException();
+    }
   }
 }
 
-Future<PokemonDTO> getRandomPokemon({
-  required int numberPokemon,
-}) async {
-  PokeAPIClient pokeAPIClient =
-      PokeAPIClient(offset: Random().nextInt(numberPokemon), limit: 1);
-  await pokeAPIClient.request();
-  var result = pokeAPIClient.result;
+class RandomPokemon extends Pokemon {
+  final int numberPokemon;
 
-  if (result != null) {
-    return PokemonDTO.fromJson(result);
-  } else {
-    throw PokeAPIReceiveException();
+  RandomPokemon({required this.numberPokemon});
+
+  @override
+  Future<PokemonDTO> getPokemon() async {
+    PokeAPIClient randomPokeApi = PokeAPIClient(
+        offset: Random().nextInt(numberPokemon).toString(), limit: '1');
+
+    await randomPokeApi.request();
+    Map<dynamic, dynamic>? resultPokemons = randomPokeApi.result;
+
+    try {
+      List<dynamic> results = resultPokemons!['results'];
+
+      PokeAPIClient pokeApi = PokeAPIClient(name: results.first['name']);
+      await pokeApi.request();
+      Map<dynamic, dynamic>? result = pokeApi.result;
+
+      if (result != null) {
+        return PokemonDTO.fromJson(result);
+      } else {
+        throw PokeAPIReceiveException();
+      }
+    } catch (_) {
+      throw PokeAPIReceiveException();
+    }
   }
 }
 
