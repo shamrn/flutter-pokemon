@@ -14,8 +14,8 @@ class PokeAPIClient {
   static const String pokemonEndpoint = AppApi.pokeApiPokemonEndpoint;
 
   final String? name;
-  final int? offset;
-  final int? limit;
+  final String? offset;
+  final String? limit;
 
   Map<dynamic, dynamic>? _result;
 

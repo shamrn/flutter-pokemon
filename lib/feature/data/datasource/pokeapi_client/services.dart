@@ -7,13 +7,20 @@ import 'package:flutter_pokemon/feature/data/datasource/pokeapi_client/exception
 import 'package:flutter_pokemon/feature/data/datasource/pokeapi_client/models.dart';
 
 abstract class Pokemon {
-  PokeAPIClient get pokeAPIClient;
+  Future<PokemonDTO> getPokemon();
+}
 
+class SearchPokemon implements Pokemon {
+  final String name;
+
+  SearchPokemon({required this.name});
+
+  @override
   Future<PokemonDTO> getPokemon() async {
-    PokeAPIClient pokeAPI = pokeAPIClient;
+    PokeAPIClient pokeAPIClient = PokeAPIClient(name: name);
 
-    await pokeAPI.request();
-    Map<dynamic, dynamic>? result = pokeAPI.result;
+    await pokeAPIClient.request();
+    Map<dynamic, dynamic>? result = pokeAPIClient.result;
 
     if (result != null) {
       return PokemonDTO.fromJson(result);
@@ -23,23 +30,35 @@ abstract class Pokemon {
   }
 }
 
-class SearchPokemon extends Pokemon {
-  final String name;
-
-  SearchPokemon({required this.name});
-
-  @override
-  PokeAPIClient get pokeAPIClient => PokeAPIClient(name: name);
-}
-
 class RandomPokemon extends Pokemon {
   final int numberPokemon;
 
   RandomPokemon({required this.numberPokemon});
 
   @override
-  PokeAPIClient get pokeAPIClient =>
-      PokeAPIClient(offset: Random().nextInt(numberPokemon), limit: 1);
+  Future<PokemonDTO> getPokemon() async {
+    PokeAPIClient randomPokeApi = PokeAPIClient(
+        offset: Random().nextInt(numberPokemon).toString(), limit: '1');
+
+    await randomPokeApi.request();
+    Map<dynamic, dynamic>? resultPokemons = randomPokeApi.result;
+
+    try {
+      List<dynamic> results = resultPokemons!['results'];
+
+      PokeAPIClient pokeApi = PokeAPIClient(name: results.first['name']);
+      await pokeApi.request();
+      Map<dynamic, dynamic>? result = pokeApi.result;
+
+      if (result != null) {
+        return PokemonDTO.fromJson(result);
+      } else {
+        throw PokeAPIReceiveException();
+      }
+    } catch (_) {
+      throw PokeAPIReceiveException();
+    }
+  }
 }
 
 Future<int> getNumberPokemon() async {
