@@ -11,20 +11,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
   final Future<AppLocalizations> _appLocalizations =
       AppLocalizations.delegate.load(AppSettings.defaultLocale);
 
-  PokemonBloc() : super(PokemonInitialState()) {
-    on<SearchPokemonLoadEvent>(_onSearchPokemon);
-    on<RandomPokemonLoadEvent>(_onRandomPokemon);
-  }
-
-  void _onRandomPokemon(
-      RandomPokemonLoadEvent event, Emitter<PokemonState> state) async {
-    _loadPokemon(RandomPokemonRepository(numberPokemon: event.number));
-  }
-
-  void _onSearchPokemon(
-      SearchPokemonLoadEvent event, Emitter<PokemonState> state) async {
-    _loadPokemon(SearchPokemonRepository(name: event.name));
-  }
+  PokemonBloc() : super(PokemonInitialState());
 
   void _loadPokemon(PokemonRepository pokemonRepository) async {
     AppLocalizations locale = await _appLocalizations;
@@ -36,8 +23,29 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
     } on PokeAPINotFoundException {
       emit(PokemonErrorState(errorMessage: locale.pokemonNotFound));
     } catch (_) {
-      emit(PokemonErrorState(
-          errorMessage: locale.pokemonRetrievalError));
+      emit(PokemonErrorState(errorMessage: locale.pokemonRetrievalError));
     }
+  }
+}
+
+class SearchPokemonBloc extends PokemonBloc {
+  SearchPokemonBloc() : super() {
+    on<SearchPokemonLoadEvent>(_onSearchPokemon);
+  }
+
+  void _onSearchPokemon(
+      SearchPokemonLoadEvent event, Emitter<PokemonState> state) async {
+    _loadPokemon(SearchPokemonRepository(name: event.name));
+  }
+}
+
+class RandomPokemonBloc extends PokemonBloc {
+  RandomPokemonBloc() : super() {
+    on<RandomPokemonLoadEvent>(_onRandomPokemon);
+  }
+
+  void _onRandomPokemon(
+      RandomPokemonLoadEvent event, Emitter<PokemonState> state) async {
+    _loadPokemon(RandomPokemonRepository(numberPokemon: event.number));
   }
 }

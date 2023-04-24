@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_pokemon/common/app_constants/app_styles.dart';
+import 'package:flutter_pokemon/feature/presentation/blocs/pokemon/pokemon_bloc.dart';
+import 'package:flutter_pokemon/feature/presentation/blocs/pokemon/pokemon_event.dart';
+import 'package:flutter_pokemon/feature/presentation/blocs/pokemon_number/pokemon_number_cubit.dart';
+import 'package:flutter_pokemon/feature/presentation/blocs/pokemon_number/pokemon_number_state.dart';
 import 'package:flutter_pokemon/feature/presentation/widgets/outlined_button_widget.dart';
+import 'package:flutter_pokemon/feature/presentation/widgets/snack_bar_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,10 +33,17 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                OutlinedButtonWidget(
-                    text: AppLocalizations.of(context)!.nameRandomScreen,
-                    size: buttonSize,
-                    onPressed: _getRandomPokemonOnPressed),
+                BlocBuilder<PokemonNumberCubit, PokemonNumberState>(
+                  builder: (context, state) {
+                    return OutlinedButtonWidget(
+                      text: AppLocalizations.of(context)!.nameRandomScreen,
+                      size: buttonSize,
+                      onPressed: _getRandomPokemonOnPressed,
+                      isActive:
+                          state is PokemonNumberLoadedState ? true : false,
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -44,6 +57,25 @@ class HomeScreen extends StatelessWidget {
   }
 
   void _getRandomPokemonOnPressed(BuildContext context) {
-    Navigator.of(context).pushNamed('/random');
+
+    PokemonNumberCubit pokemonNumberCubit = context.read<PokemonNumberCubit>();
+    PokemonNumberState pokemonNumberState = pokemonNumberCubit.state;
+
+    if (pokemonNumberState is PokemonNumberLoadedState) {
+      context
+          .read<RandomPokemonBloc>()
+          .add(RandomPokemonLoadEvent(number: pokemonNumberState.number));
+      Navigator.of(context).pushNamed('/random');
+
+
+    } else if (pokemonNumberState is PokemonNumberLoadingState) {
+      ScaffoldMessenger.of(context).showSnackBar(snackBarWidget(
+          context: context,
+          message: AppLocalizations.of(context)!.randomPokemonLoading));
+    } else if (pokemonNumberState is PokemonNumberErrorState) {
+      ScaffoldMessenger.of(context).showSnackBar(snackBarWidget(
+          context: context,
+          message: AppLocalizations.of(context)!.randomPokemonNotAvailable));
+    }
   }
 }

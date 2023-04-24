@@ -53,7 +53,7 @@ class _SearchWidgetState extends State<SearchWidget> {
           splashFactory: InkRipple.splashFactory,
           onTap: () {
             if (_formKey.currentState!.validate()) {
-              context.read<PokemonBloc>().add(
+              context.read<SearchPokemonBloc>().add(
                   SearchPokemonLoadEvent(name: _pokemonNameController.text));
             }
           },
