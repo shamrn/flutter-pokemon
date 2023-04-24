@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_pokemon/common/app_constants/app_settings.dart';
 import 'package:flutter_pokemon/common/l10n/l10n.dart';
 import 'package:flutter_pokemon/core/platform/splash_screen.dart';
 import 'package:flutter_pokemon/feature/presentation/blocs/pokemon_number/pokemon_number_cubit.dart';
@@ -41,7 +42,7 @@ class PokemonApp extends StatelessWidget {
         ),
 
         // Localization
-        locale: const Locale('ru'),
+        locale: AppSettings.defaultLocale,
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
