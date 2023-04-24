@@ -5,25 +5,27 @@ class OutlinedButtonWidget extends StatelessWidget {
   final String text;
   final Size size;
   final Function onPressed;
+  final bool isActive;
 
   const OutlinedButtonWidget(
       {Key? key,
       required this.text,
       required this.size,
-      required this.onPressed})
+      required this.onPressed,
+      this.isActive = true})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        side: const BorderSide(
+        side: BorderSide(
           width: 0.5,
-          color: AppColors.secondColor,
+          color: isActive ? AppColors.secondColor : AppColors.inActiveButton,
         ),
+        backgroundColor: isActive ? null : AppColors.inActiveButton,
         fixedSize: size,
         shape: const StadiumBorder(),
-        //    padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 24)
       ),
       onPressed: () => onPressed(context),
       child: Text(
