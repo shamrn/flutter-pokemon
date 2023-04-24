@@ -1,3 +1,5 @@
+// The file implements search widget
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -45,6 +47,8 @@ class _SearchWidgetState extends State<SearchWidget> {
   }
 
   Widget _button() {
+    // The method returns the search button. Responsible for the logic when pressing
+
     return ClipOval(
       child: Material(
         color: AppColors.secondColor,
@@ -72,6 +76,8 @@ class _SearchWidgetState extends State<SearchWidget> {
   }
 
   String? _validation(String? value) {
+    // Implemented validation of the search field
+
     {
       if (value == null || value.isEmpty) {
         return AppLocalizations.of(context)!.textValidationRequiredField;
@@ -81,6 +87,7 @@ class _SearchWidgetState extends State<SearchWidget> {
   }
 
   InputDecoration get _inputDecoration {
+    // Decoration for input
     return InputDecoration(
       suffixIcon: _button(),
       hintText: AppLocalizations.of(context)!.textSearchField,

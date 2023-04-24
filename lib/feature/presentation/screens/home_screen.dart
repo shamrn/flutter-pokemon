@@ -1,3 +1,5 @@
+// The file implements the home screen
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,6 +28,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+
                 OutlinedButtonWidget(
                     text: AppLocalizations.of(context)!.nameSearchScreen,
                     size: buttonSize,
@@ -33,6 +36,8 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
+
+                // Change the button to active and inactive
                 BlocBuilder<PokemonNumberCubit, PokemonNumberState>(
                   builder: (context, state) {
                     return OutlinedButtonWidget(
@@ -53,21 +58,26 @@ class HomeScreen extends StatelessWidget {
   }
 
   void _searchPokemonOnPressed(BuildContext context) {
+    // The method is called when the user presses the 'search' button
+
     Navigator.of(context).pushNamed('/search');
   }
 
   void _getRandomPokemonOnPressed(BuildContext context) {
+    // The method is called when the user presses the 'get random pokemon' button
 
     PokemonNumberCubit pokemonNumberCubit = context.read<PokemonNumberCubit>();
     PokemonNumberState pokemonNumberState = pokemonNumberCubit.state;
 
+    // If we got the number of pokemon. Load a random pokemon and open random screen
     if (pokemonNumberState is PokemonNumberLoadedState) {
       context
           .read<RandomPokemonBloc>()
           .add(RandomPokemonLoadEvent(number: pokemonNumberState.number));
       Navigator.of(context).pushNamed('/random');
 
-
+    // If the method of getting the number of pokemon is still loading or
+    // error is received show the user snack bar
     } else if (pokemonNumberState is PokemonNumberLoadingState) {
       ScaffoldMessenger.of(context).showSnackBar(snackBarWidget(
           context: context,

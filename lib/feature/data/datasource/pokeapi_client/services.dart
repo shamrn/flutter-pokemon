@@ -7,10 +7,14 @@ import 'package:flutter_pokemon/feature/data/datasource/pokeapi_client/exception
 import 'package:flutter_pokemon/feature/data/datasource/pokeapi_client/models.dart';
 
 abstract class Pokemon {
+  // Basic service interface
+
   Future<PokemonDTO> getPokemon();
 }
 
 class SearchPokemon implements Pokemon {
+  // Implementing a pokemon search service
+
   final String name;
 
   SearchPokemon({required this.name});
@@ -31,6 +35,8 @@ class SearchPokemon implements Pokemon {
 }
 
 class RandomPokemon extends Pokemon {
+  // Implementing random pokemon service
+
   final int numberPokemon;
 
   RandomPokemon({required this.numberPokemon});
@@ -62,6 +68,9 @@ class RandomPokemon extends Pokemon {
 }
 
 Future<int> getNumberPokemon() async {
+  // Function returns the number of pokemon.
+  // Defined by the count field in the returned Json object
+
   PokeAPIClient pokeAPIClient = PokeAPIClient();
   await pokeAPIClient.request();
   var result = pokeAPIClient.result;

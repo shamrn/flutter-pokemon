@@ -1,3 +1,5 @@
+// The file implements data models
+
 class PokemonModel {
   final int id;
   final String name;

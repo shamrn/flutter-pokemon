@@ -40,6 +40,7 @@ class PokeAPIClient {
   }
 
   String _getEndpoint() {
+    // Method for concatenating uri
     String endpoint = '$apiPath/$apiVersion/$pokemonEndpoint';
     if (name != null) {
       endpoint = '$endpoint/$name';
@@ -49,6 +50,7 @@ class PokeAPIClient {
   }
 
   Map<String, dynamic> get _params => {
+    // Property returns the query parameters
         'offset': offset,
         'limit': limit,
       };
