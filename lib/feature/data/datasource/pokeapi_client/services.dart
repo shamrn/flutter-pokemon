@@ -6,33 +6,40 @@ import 'package:flutter_pokemon/feature/data/datasource/pokeapi_client/client.da
 import 'package:flutter_pokemon/feature/data/datasource/pokeapi_client/exceptions.dart';
 import 'package:flutter_pokemon/feature/data/datasource/pokeapi_client/models.dart';
 
-Future<PokemonDTO> getPokemonByName({
-  required String name,
-}) async {
-  PokeAPIClient pokeAPIClient = PokeAPIClient(name: name);
-  await pokeAPIClient.request();
-  var result = pokeAPIClient.result;
+abstract class Pokemon {
+  PokeAPIClient get pokeAPIClient;
 
-  if (result != null) {
-    return PokemonDTO.fromJson(result);
-  } else {
-    throw PokeAPIReceiveException();
+  Future<PokemonDTO> getPokemon() async {
+    PokeAPIClient pokeAPI = pokeAPIClient;
+
+    await pokeAPI.request();
+    Map<dynamic, dynamic>? result = pokeAPI.result;
+
+    if (result != null) {
+      return PokemonDTO.fromJson(result);
+    } else {
+      throw PokeAPIReceiveException();
+    }
   }
 }
 
-Future<PokemonDTO> getRandomPokemon({
-  required int numberPokemon,
-}) async {
-  PokeAPIClient pokeAPIClient =
-      PokeAPIClient(offset: Random().nextInt(numberPokemon), limit: 1);
-  await pokeAPIClient.request();
-  var result = pokeAPIClient.result;
+class SearchPokemon extends Pokemon {
+  final String name;
 
-  if (result != null) {
-    return PokemonDTO.fromJson(result);
-  } else {
-    throw PokeAPIReceiveException();
-  }
+  SearchPokemon({required this.name});
+
+  @override
+  PokeAPIClient get pokeAPIClient => PokeAPIClient(name: name);
+}
+
+class RandomPokemon extends Pokemon {
+  final int numberPokemon;
+
+  RandomPokemon({required this.numberPokemon});
+
+  @override
+  PokeAPIClient get pokeAPIClient =>
+      PokeAPIClient(offset: Random().nextInt(numberPokemon), limit: 1);
 }
 
 Future<int> getNumberPokemon() async {
